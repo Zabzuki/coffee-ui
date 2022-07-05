@@ -1,46 +1,35 @@
-# Getting Started with Create React App
+## Device configuration UI component
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a simplified example of a UI component which remotely controls a coffee
+machine which can dispense coffee and espresso. The UI element allows users to
+order either a coffee or an espresso and displays the number of dispensed
+beverages.
 
-## Available Scripts
+![Coffee or Espress](coffee-espresso.png)
 
-In the project directory, you can run:
+The main goal is to implement the UI component [`CoffeeUI`](./CoffeeUI.tsx) with the
+following behaviour:
 
-### `npm start`
+1. Add a `button` to order a coffee
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+   - with a text that reads `Coffee (42)`, where `42` is the number of dispensed
+     coffees so far
+   - with a CSS class called `coffeeBtn`
+   - contain the number of dispensed coffees in a `span` with the class
+     `coffees`
+   - when a user clicks the button, the number of dispensed coffees should be
+     increased by one
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+2. Add a similar `button` to order a espresso
 
-### `npm test`
+   - number of dispensed espressos so far is `17`
+   - CSS class: `espressoBtn`
+   - `span.espressos` which contains the number of dispensed espressos
+   - when clicked, increase number of dispensed espressos
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+3. The coffee machine can only make one beverage at a time, so if the user
+   orders an espresso after having ordered a coffee, the coffee order is
+   cancelled.
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+4. Users can cancel their order, so if the user has ordered a coffee and clicks
+   the coffee button a second time, the order should be cancelled.
