@@ -1,74 +1,36 @@
-//import * as React from 'react'
-
 import { useState } from 'react'
 
-enum MachineState {
-	Free,
-	Coffee,
-	Espresso,
-}
+const BASE_COFFEES = 42
+const BASE_ESPRESSOS = 17
 
+type Order = 'none' | 'coffee' | 'espresso'
+
+/**
+ * UI component that remotely controls a coffee machine.
+ *
+ * The machine makes one beverage at a time, so at most one order can be
+ * pending. Clicking a drink toggles its order; clicking the other drink while
+ * one is pending cancels the first and starts the second.
+ */
 export const CoffeeUI = () => {
-	const [coffee, setCoffee] = useState(0)
-	const [espresso, setEspresso] = useState(0)
-	const [machineState, setMachineState] = useState(MachineState.Free)
+	const [order, setOrder] = useState<Order>('none')
 
-	// 	switch (message) {
-	// 		case 'free':
-	// 			setState(state)
-	// 			break
-	// 		case 'preparing coffee':
-	// 			setState(state + 1)
-	// 			break
-	// 		case 'preparing espresso':
-	// 			setState(state - 1)
-	// 			break
-	// 		default:
-	// 			break
-	// 	}
+	const coffees = BASE_COFFEES + (order === 'coffee' ? 1 : 0)
+	const espressos = BASE_ESPRESSOS + (order === 'espresso' ? 1 : 0)
 
-	const handleCoffee = () => {
-		if (machineState === MachineState.Coffee) {
-			setMachineState(MachineState.Free)
-		}
-		if (machineState === MachineState.Espresso) {
-			setEspresso(espresso - 1)
-		}
+	const orderCoffee = () =>
+		setOrder((current) => (current === 'coffee' ? 'none' : 'coffee'))
+	const orderEspresso = () =>
+		setOrder((current) => (current === 'espresso' ? 'none' : 'espresso'))
 
-		setMachineState(MachineState.Coffee)
-		setTimeout(() => setCoffee(coffee + 1), 1000)
-		console.log(machineState)
-		setMachineState(MachineState.Free)
-	}
-	const handleEspresso = () => {
-		//if (state === -1) {
-		//	setState(0)
-		//}
-		setTimeout(() => setEspresso(espresso + 1), 100)
-	}
 	return (
 		<div>
-			<ButtonComponent
-				handleClick={handleCoffee}
-				name="Coffee"
-				class="coffeeBtn"
-			/>
-			<ButtonComponent
-				handleClick={handleEspresso}
-				name="Espresso"
-				class="espressoBtn"
-			/>
+			<button className="coffeeBtn" onClick={orderCoffee}>
+				Coffee (<span className="coffees">{coffees}</span>)
+			</button>
+			<button className="espressoBtn" onClick={orderEspresso}>
+				Espresso (<span className="espressos">{espressos}</span>)
+			</button>
 		</div>
-	)
-}
-export const ButtonComponent = (props: any) => {
-	return (
-		<button
-			className={props.className}
-			onClick={props.handleClick}
-			name={props.name}
-		>
-			{props.name}
-		</button>
 	)
 }

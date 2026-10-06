@@ -1,35 +1,52 @@
-## Device configuration UI component
+# coffee-ui
 
-This is a simplified example of a UI component which remotely controls a coffee
-machine which can dispense coffee and espresso. The UI element allows users to
-order either a coffee or an espresso and displays the number of dispensed
-beverages.
+My React + TypeScript solution to a coding challenge: a UI component that
+remotely controls a coffee machine which can dispense **coffee** or **espresso**.
 
-![Coffee or Espress](coffee-espresso.png)
+![Coffee or espresso](coffee-espresso.png)
 
-The main goal is to implement the UI component [`CoffeeUI`](./CoffeeUI.tsx) with the
-following behaviour:
+## The problem
 
-1. Add a `button` to order a coffee
+Render two buttons that each show how many drinks have been dispensed
+(`Coffee (42)`, `Espresso (17)`). Clicking a button places an order and bumps its
+counter. The machine makes **one beverage at a time**, so:
 
-   - with a text that reads `Coffee (42)`, where `42` is the number of dispensed
-     coffees so far
-   - with a CSS class called `coffeeBtn`
-   - contain the number of dispensed coffees in a `span` with the class
-     `coffees`
-   - when a user clicks the button, the number of dispensed coffees should be
-     increased by one
+- clicking the same drink again **cancels** the pending order (counter goes back);
+- clicking the other drink **cancels** the first order and starts the new one.
 
-2. Add a similar `button` to order a espresso
+The buttons carry the classes `coffeeBtn` / `espressoBtn`, and each count lives in
+a `span` with the class `coffees` / `espressos`.
 
-   - number of dispensed espressos so far is `17`
-   - CSS class: `espressoBtn`
-   - `span.espressos` which contains the number of dispensed espressos
-   - when clicked, increase number of dispensed espressos
+## My approach
 
-3. The coffee machine can only make one beverage at a time, so if the user
-   orders an espresso after having ordered a coffee, the coffee order is
-   cancelled.
+The whole thing is one small state machine. A single `order` state holds which
+drink is currently pending — `'none'`, `'coffee'` or `'espresso'` — because the
+machine can only have one order at a time.
 
-4. Users can cancel their order, so if the user has ordered a coffee and clicks
-   the coffee button a second time, the order should be cancelled.
+- Displayed counts are derived, not stored: `42`/`17` plus one if that drink is
+  the pending order.
+- Clicking a drink **toggles** it (pending → none) or switches the pending order
+  from the other drink, which naturally cancels it.
+
+This keeps the two buttons mutually exclusive without any extra bookkeeping. See
+[`src/CoffeeUI.tsx`](./src/CoffeeUI.tsx); the behaviour is pinned by the nine tests
+in [`src/CoffeeUI.spec.tsx`](./src/CoffeeUI.spec.tsx).
+
+Deriving the counts from a single state avoids an earlier approach that stored
+each counter separately and bumped them inside `setTimeout`, which was racy and
+let the two orders drift out of sync.
+
+## Run it
+
+```bash
+npm install
+npm test     # run the test suite
+npm start    # open the component in the browser
+```
+
+**Built with:** React 17, TypeScript, Create React App, Jest and React Testing
+Library.
+
+## About
+
+My solution to a take-home coding challenge.
