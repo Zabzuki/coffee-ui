@@ -7,6 +7,8 @@ remotely controls a coffee machine which can dispense **coffee** or **espresso**
 
 ![Component demo](docs/media/coffee-ui-demo.gif)
 
+*Clicking Coffee or Espresso places an order and bumps that drink's counter; clicking the same drink again cancels it, and clicking the other drink cancels the first order. (The component is intentionally unstyled — the buttons sit top-left.)*
+
 ## The problem
 
 Render two buttons that each show how many drinks have been dispensed
