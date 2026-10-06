@@ -54,3 +54,7 @@ Library.
 ## About
 
 My solution to a take-home coding challenge.
+
+## License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file.
