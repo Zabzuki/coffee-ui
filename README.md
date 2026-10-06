@@ -5,6 +5,8 @@ remotely controls a coffee machine which can dispense **coffee** or **espresso**
 
 ![Coffee or espresso](coffee-espresso.png)
 
+![Component demo](docs/media/coffee-ui-demo.gif)
+
 ## The problem
 
 Render two buttons that each show how many drinks have been dispensed
